@@ -14,30 +14,30 @@
  *    // => '19y1mo9d22h'
  */
 export function formatDateDiff(milliseconds: number, isZh = true, full = false) {
-  const [ms, s, m, h, d, mo] = [1000, 60, 60, 24, 30, 12]
+    const [ms, s, m, h, d, mo] = [1000, 60, 60, 24, 30, 12]
 
-  const [sl, ml, hl, dl, mol, yl] = [
-    ms,
-    ms * s,
-    ms * s * m,
-    ms * s * m * h,
-    ms * s * m * h * d,
-    ms * s * m * h * d * mo
-  ]
+    const [sl, ml, hl, dl, mol, yl] = [
+        ms,
+        ms * s,
+        ms * s * m,
+        ms * s * m * h,
+        ms * s * m * h * d,
+        ms * s * m * h * d * mo
+    ]
 
-  const seconds = Math.floor((milliseconds % ml) / sl)
-  const minutes = Math.floor((milliseconds % hl) / ml)
-  const hours = Math.floor((milliseconds % dl) / hl)
-  const days = Math.floor((milliseconds % mol) / dl)
-  const months = Math.floor((milliseconds % yl) / mol)
-  const years = Math.floor(milliseconds / yl)
+    const seconds = Math.floor((milliseconds % ml) / sl)
+    const minutes = Math.floor((milliseconds % hl) / ml)
+    const hours = Math.floor((milliseconds % dl) / hl)
+    const days = Math.floor((milliseconds % mol) / dl)
+    const months = Math.floor((milliseconds % yl) / mol)
+    const years = Math.floor(milliseconds / yl)
 
-  const sStr = seconds > 0 ? seconds + (isZh ? '秒' : 's') : ''
-  const mStr = minutes > 0 ? minutes + (isZh ? (full ? '分钟' : '分') : 'm') : ''
-  const hStr = hours > 0 ? hours + (isZh ? (full ? '小时' : '时') : 'h') : ''
-  const dStr = days > 0 ? days + (isZh ? '天' : 'd') : ''
-  const moStr = months > 0 ? months + (isZh ? '月' : 'mo') : ''
-  const yStr = years > 0 ? years + (isZh ? '年' : 'y') : ''
+    const sStr = seconds > 0 ? `${seconds}${isZh ? '秒' : 's'}` : ''
+    const mStr = minutes > 0 ? `${minutes}${isZh ? (full ? '分钟' : '分') : 'm'}` : ''
+    const hStr = hours > 0 ? `${hours}${isZh ? (full ? '小时' : '时') : 'h'}` : ''
+    const dStr = days > 0 ? `${days}${isZh ? '天' : 'd'}` : ''
+    const moStr = months > 0 ? `${months}${isZh ? '月' : 'mo'}` : ''
+    const yStr = years > 0 ? `${years}${isZh ? '年' : 'y'}` : ''
 
-  return `${yStr}${moStr}${dStr}${hStr}${mStr}${sStr}`
+    return `${yStr}${moStr}${dStr}${hStr}${mStr}${sStr}`
 }

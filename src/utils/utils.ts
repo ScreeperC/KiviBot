@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
+import type { BinaryLike, BinaryToTextEncoding } from 'node:crypto'
 import crypto from 'node:crypto'
 
-import type { AllMessageEvent } from '@/src/core'
-import type { BinaryLike, BinaryToTextEncoding } from 'node:crypto'
+import type { AllMessageEvent } from '../core'
 
 // 导出 dayjs
 export { dayjs }
@@ -13,11 +13,11 @@ export { dayjs }
  * @return {Promise<void>}
  */
 export async function wait(ms: number): Promise<void> {
-  return new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve()
-    }, ms)
-  })
+    return new Promise<void>((resolve) => {
+        setTimeout(() => {
+            resolve()
+        }, ms)
+    })
 }
 
 /**
@@ -27,13 +27,13 @@ export async function wait(ms: number): Promise<void> {
  * @return {Buffer | string} MD5 加密后的数据
  */
 export function md5(text: BinaryLike, encoding?: BinaryToTextEncoding): string | Buffer {
-  const hash = crypto.createHash('md5').update(text)
+    const hash = crypto.createHash('md5').update(text)
 
-  if (encoding) {
-    return hash.digest(encoding)
-  }
+    if (encoding) {
+        return hash.digest(encoding)
+    }
 
-  return hash.digest()
+    return hash.digest()
 }
 
 /**
@@ -42,7 +42,7 @@ export function md5(text: BinaryLike, encoding?: BinaryToTextEncoding): string |
  * @return {string} 转换后的字符串
  */
 export function qs(obj: Record<number | string, any>): string {
-  return new URLSearchParams(obj).toString()
+    return new URLSearchParams(obj).toString()
 }
 
 /**
@@ -52,7 +52,7 @@ export function qs(obj: Record<number | string, any>): string {
  * @return {number} 随机范围内的整数
  */
 export function randomInt(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+    return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 /**
@@ -61,7 +61,7 @@ export function randomInt(min: number, max: number): number {
  * @return {T} 数组内的随机一项
  */
 export function randomItem<T = any>(array: [T, ...T[]]): T {
-  return array[randomInt(0, array.length - 1)]
+    return array[randomInt(0, array.length - 1)]
 }
 
 /**
@@ -71,7 +71,7 @@ export function randomItem<T = any>(array: [T, ...T[]]): T {
  * @return {string} 格式化后的时间字符串
  */
 export function time(format?: string, date?: Date): string {
-  return dayjs(date ?? new Date()).format(format ?? 'YYYY-MM-DD HH:mm')
+    return dayjs(date ?? new Date()).format(format ?? 'YYYY-MM-DD HH:mm')
 }
 
 /**
@@ -80,14 +80,14 @@ export function time(format?: string, date?: Date): string {
  * @return {number} 目标 id
  */
 export function getTargetId(event: AllMessageEvent): number {
-  switch (event.message_type) {
-    case 'private':
-      return event.sender.user_id
-    case 'group':
-      return event.group_id
-    case 'discuss':
-      return event.discuss_id
-  }
+    switch (event.message_type) {
+        case 'private':
+            return event.sender.user_id
+        case 'group':
+            return event.group_id
+        case 'discuss':
+            return event.discuss_id
+    }
 }
 
 /**
@@ -96,11 +96,11 @@ export function getTargetId(event: AllMessageEvent): number {
  * @return {string} stringify 结果
  */
 export function stringifyError(error: any): string {
-  if (typeof error === 'object') {
-    return error?.message ?? JSON.stringify(error, null, 2)
-  } else {
-    return String(error)
-  }
+    if (typeof error === 'object') {
+        return error?.message ?? JSON.stringify(error, null, 2)
+    } else {
+        return String(error)
+    }
 }
 
 /**
@@ -109,11 +109,11 @@ export function stringifyError(error: any): string {
  * @return {T[]} 数组结果
  */
 export function ensureArray<T = any>(value: T | T[]): T[] {
-  if (Array.isArray(value)) {
-    return value
-  } else {
-    return [value]
-  }
+    if (Array.isArray(value)) {
+        return value
+    } else {
+        return [value]
+    }
 }
 
 /**
@@ -123,15 +123,15 @@ export function ensureArray<T = any>(value: T | T[]): T[] {
  * @return {number} 解析结果
  */
 export function parseUin(qqLikeStr: string): number {
-  let qq = 0
+    let qq = 0
 
-  try {
-    if (/^\{at:\d+\}$/.test(qqLikeStr)) {
-      qq = Number(/^\{at:(\d+)\}$/.exec(qqLikeStr)![1])
-    } else if (/^\d+$/.test(qqLikeStr)) {
-      qq = Number(/^(\d+)$/.exec(qqLikeStr)![1])
-    }
-  } catch {}
+    try {
+        if (/^\{at:\d+\}$/.test(qqLikeStr)) {
+            qq = Number(/^\{at:(\d+)\}$/.exec(qqLikeStr)![1])
+        } else if (/^\d+$/.test(qqLikeStr)) {
+            qq = Number(/^(\d+)$/.exec(qqLikeStr)![1])
+        }
+    } catch {}
 
-  return qq
+    return qq
 }

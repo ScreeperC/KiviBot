@@ -1,47 +1,47 @@
 import os from 'node:os'
 
 import { stringifyError } from './utils'
-import { KiviLogger } from '@/src/core'
+import { KiviLogger } from '../core'
 
 import type { Client } from 'oicq'
 
 export async function uploadFileToDir(
-  this: Client,
-  group: number,
-  filepath: string,
-  uploadFilename?: string,
-  dirname?: string
+    this: Client,
+    group: number,
+    filepath: string,
+    uploadFilename?: string,
+    dirname?: string
 ): Promise<boolean> {
-  try {
-    const isWin = os.platform() === 'win32'
+    try {
+        const isWin = os.platform() === 'win32'
 
-    const dir = dirname || String(this.uin)
-    const gfs = this.pickGroup(group).fs
-    const filename = uploadFilename || filepath.split(isWin ? '\\' : '/').at(-1)
+        const dir = dirname || String(this.uin)
+        const gfs = this.pickGroup(group).fs
+        const filename = uploadFilename || filepath.split(isWin ? '\\' : '/').at(-1)
 
-    let isDirExist = false
-    let pid = '/'
+        let isDirExist = false
+        let pid = '/'
 
-    const ls = await gfs.ls()
+        const ls = await gfs.ls()
 
-    ls.forEach((l) => {
-      if (l.name === dir && l.is_dir) {
-        isDirExist = true
-        pid = l.fid
-      }
-    })
+        ls.forEach((l) => {
+            if (l.name === dir && l.is_dir) {
+                isDirExist = true
+                pid = l.fid
+            }
+        })
 
-    if (!isDirExist) {
-      const state = await gfs.mkdir(dir)
-      pid = state.fid
+        if (!isDirExist) {
+            const state = await gfs.mkdir(dir)
+            pid = state.fid
+        }
+
+        await gfs.upload(filepath, pid, filename)
+
+        return true
+    } catch (e) {
+        KiviLogger.error(stringifyError(e))
+
+        return true
     }
-
-    await gfs.upload(filepath, pid, filename)
-
-    return true
-  } catch (e) {
-    KiviLogger.error(stringifyError(e))
-
-    return true
-  }
 }

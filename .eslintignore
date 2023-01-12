@@ -1,5 +1,2 @@
-lib
-examples
-package.json
-package-lock.json
-tsconfig.json
+**/*.js
+/dist
