@@ -3,3 +3,4 @@ fixtures/data
 lib
 .idea
 package-lock.json
+dist

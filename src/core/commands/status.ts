@@ -5,7 +5,8 @@ import { MessageCounts } from '../bindSendMessage'
 import { Devices } from '../logger'
 import { searchAllPlugins } from '../plugin'
 import { formatDateDiff, formatFileSize } from '../../utils'
-import { pkg, plugins } from '../start'
+import { plugins } from '../start'
+import { version } from ' ../../../package.json'
 
 import type { Client } from 'oicq'
 
@@ -49,7 +50,7 @@ export async function fetchStatus(bot: Client) {
 消息: 收 ${recv_msg_cnt}，发 ${MessageCounts.value}
 当前: ${msg_cnt_per_min} 条/分钟
 启动: ${runTime}
-框架: ${pkg.version}-${formatFileSize(rss)}-${per(rss)}%
+框架: ${version}-${formatFileSize(rss)}-${per(rss)}%
 协议: oicq-v${OicqVersion}-${Devices[bot.config.platform]}
 系统: ${SystemMap[os.type()] || '其他'}-${arch}-node${nodeVersion}
 内存: ${formatFileSize(used)}/${formatFileSize(total)}-${per(used)}%

@@ -1,7 +1,6 @@
 import type { Client } from 'oicq'
 
 /** 判断 Bot 是否有权限或者是否能够禁言目标群的目标 qq  */
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function canBan(this: Client, gid: number, qq: number) {
     if (qq === this.uin) {
         // 目标 qq 是自身时无法禁言

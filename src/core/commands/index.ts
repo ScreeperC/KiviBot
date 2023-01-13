@@ -5,7 +5,7 @@ import { handlePluginCommand } from './plugin'
 import { fetchStatus } from './status'
 import { KiviLogger } from '../logger'
 import { notice, stringifyError, update } from '../../utils'
-import { pkg } from '../start'
+import { version} from '../../../package.json'
 
 import type { KiviConf } from '../config'
 import type { AllMessageEvent } from '../plugin'
@@ -28,7 +28,9 @@ KiviBot 是一个开源、轻量、跨平台、注重体验、开发者友好、
 开源地址: https://github.com/KiviBotLab/KiviBot
 `.trim()
 
+
 /** 解析框架命令，进行框架操作，仅框架主管理有权限 */
+// @ts-ignore
 export async function handleKiviCommand(event: AllMessageEvent, bot: Client, kiviConf: KiviConf) {
     const msg = event.toString().trim()
 
@@ -115,6 +117,6 @@ export async function handleKiviCommand(event: AllMessageEvent, bot: Client, kiv
             await event.reply(`〓 更新失败 〓\n错误信息: ${stringifyError(e)}`)
         }
 
-        process.title = `KiviBot ${pkg.version} ${kiviConf.account}`
+        process.title = `KiviBot ${version} ${kiviConf.account}`
     }
 }

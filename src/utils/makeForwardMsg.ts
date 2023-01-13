@@ -23,7 +23,7 @@ export async function makeForwardMsg(
     if (!Array.isArray(msgList)) msgList = [msgList]
     const nodes = []
     const makers: Converter[] = []
-    let imgs: Image[] = []
+    let img: Image[] = []
     let preview = ''
     let cnt = 0
     for (const fake of msgList) {
@@ -40,9 +40,9 @@ export async function makeForwardMsg(
         if (cnt < 4) {
             cnt++
             if (!desc) {
-                preview += `<title color='#777777' size='26'>${`${escapeXml(nickname)}: ${escapeXml(
+                preview += `<title color='#777777' size='26'>${escapeXml(nickname)}: ${escapeXml(
                     maker.brief.slice(0, 50)
-                )}`}</title>`
+                )}</title>`
             }
         }
         nodes.push({
@@ -57,9 +57,9 @@ export async function makeForwardMsg(
                 9: dm
                     ? null
                     : {
-                          1: this.uin,
-                          4: nickname
-                      },
+                        1: this.uin,
+                        4: nickname
+                    },
                 14: dm ? nickname : null,
                 20: {
                     1: 0,
@@ -72,8 +72,8 @@ export async function makeForwardMsg(
         })
     }
     if (desc) preview = `<title color='#777777' size='26'>${desc}</title>`
-    for (const maker of makers) imgs = [...imgs, ...maker.imgs]
-    if (imgs.length) await that.uploadImages(imgs)
+    for (const maker of makers) img = [...img, ...maker.imgs]
+    if (img.length) await that.uploadImages(img)
     const compressed = await gzip(
         pb.encode({
             1: nodes,
@@ -91,7 +91,7 @@ export async function makeForwardMsg(
         nodes.length
     }" flag="3" m_resid="${resId}" serviceID="35" m_fileSize="${
         compressed.length
-    }"><item layout="1"><title color="#000000" size="34"> ${title} </title>${preview}<hr></hr><summary color="#808080" size="26"> ${`查看 ${nodes.length} 条转发消息`} </summary></item><source name="聊天记录"></source></msg>`
+    }"><item layout="1"><title color="#000000" size="34"> ${title} </title>${preview}<hr></hr><summary color="#808080" size="26"> 查看 ${nodes.length} 条转发消息 </summary></item><source name="聊天记录"></source></msg>`
 
     return {
         type: 'xml',

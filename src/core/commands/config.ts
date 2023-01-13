@@ -29,7 +29,7 @@ export const ModeMap = {
 } as const
 
 export type ReplyFunc = (content: Sendable, quote?: boolean | undefined) => Promise<MessageRet>
-
+// @ts-ignore
 export async function handleConfigCommand(bot: Client, params: string[], reply: ReplyFunc) {
     if (!params.length) {
         return reply(ConfigMenu)

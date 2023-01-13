@@ -1,7 +1,7 @@
 import { getPluginNameByPath } from './getPluginNameByPath'
 import { KiviPluginError } from './pluginError'
 import { KiviLogger } from '../logger'
-import { colors, escapeColor, stringifyError } from '../../utils'
+import { colors, stringifyError } from '../../utils'
 import { plugins } from '../start'
 
 import type { KiviPlugin } from './plugin'
@@ -47,7 +47,7 @@ export async function enablePlugin(bot: Client, kiviConf: KiviConf, pluginPath: 
             plugins.delete(pluginName)
             const info = colors.red(`插件 ${pn} 没有导出 \`KiviPlugin\` 类实例的 \`plugin\` 属性`)
             error(info)
-            return escapeColor(info)
+            return info.replace(/\u001b\[\d+m/gu, '')
         }
     } catch (e: any) {
         plugins.delete(pluginName)

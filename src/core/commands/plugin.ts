@@ -8,7 +8,8 @@ import {
     searchAllPlugins
 } from '../plugin'
 import { install, stringifyError, update } from '../../utils'
-import { pkg, plugins } from '../start'
+import { plugins } from '../start'
+import {version} from  '../../../package.json'
 
 import type { ReplyFunc } from './config'
 import type { Client } from 'oicq'
@@ -22,7 +23,7 @@ export const PluginMenu = `
 /plugin reload <name>
 /plugin update <name?>
 `.trim()
-
+// @ts-ignore
 export async function handlePluginCommand(bot: Client, params: string[], reply: ReplyFunc) {
     if (!params.length) {
         return reply(PluginMenu)
@@ -97,7 +98,7 @@ ${pinfo.join('\n')}
         }
 
         // TODO: 将 forEach 用 for of 重写
-
+// @ts-ignore
         Array.from(plugins.entries()).forEach(async ([pname, plugin], i) => {
             const targetPluginPath = await getPluginPathByName(pname)
 
@@ -153,7 +154,7 @@ ${pinfo.join('\n')}
             await reply(`〓 ${name}更新失败 〓\n错误信息: ${stringifyError(e)}`)
         }
 
-        process.title = `KiviBot ${pkg.version} ${kiviConf.account}`
+        process.title = `KiviBot ${version} ${kiviConf.account}`
 
         return
     }
@@ -269,7 +270,7 @@ ${pinfo.join('\n')}
             await reply(`〓 ${pname} 安装失败 〓\n错误信息: ${stringifyError(e)}`)
         }
 
-        process.title = `KiviBot ${pkg.version} ${kiviConf.account}`
+        process.title = `KiviBot ${version} ${kiviConf.account}`
     }
 
     if (secondCmd === 'remove' || secondCmd === 'rm') {
@@ -297,6 +298,6 @@ ${pinfo.join('\n')}
             await reply(`〓 ${pname} 移除失败 〓\n错误信息: ${stringifyError(e)}`)
         }
 
-        process.title = `KiviBot ${pkg.version} ${kiviConf.account}`
+        process.title = `KiviBot ${version} ${kiviConf.account}`
     }
 }

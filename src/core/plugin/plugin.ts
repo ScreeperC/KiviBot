@@ -36,7 +36,7 @@ export type GroupMessageHandler = (event: GroupMessageEvent, bot: Client) => any
  * @param {Client} bot Bot 实例
  * @param {AdminArray} admins 管理员列表
  */
-export type BotHandler = (bot: Client, admins: AdminArray) => any
+export type BotHandler = (bot: Client, admins: AdminArray | undefined) => any
 
 /**
  * 命令消息处理函数
@@ -186,6 +186,7 @@ export class KiviPlugin extends EventEmitter {
         // 插件监听 oicq 的所有事件
         OicqEvents.forEach((evt) => {
             const handler = (e: FirstParam<EventMap<Client>[typeof evt]>) => {
+                // @ts-ignore
                 if (MessageEvents.includes(evt)) {
                     const event = e as AllMessageEvent
 

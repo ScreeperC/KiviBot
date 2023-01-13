@@ -15,12 +15,12 @@ import type { KiviPlugin } from './plugin'
 export const plugins: Map<string, KiviPlugin> = new Map()
 
 /** 框架的 package.json 描述信息 */
-export const pkg = require('../../package.json')
+import { version } from '../../package.json'
 
 /** 通过 `kivi.json` 配置文件启动框架 */
 export function start() {
     // 设置终端标题
-    process.title = `KiviBot ${pkg.version} `
+    process.title = `KiviBot ${version} `
 
     // 打印 KiviBot logo
     console.log(`\n${colors.cyan(LOGO)}\n`)
@@ -43,12 +43,12 @@ export function start() {
         Object.assign(kiviConf, conf)
 
         // 终端标题加上账号
-        process.title = `KiviBot ${pkg.version} ${kiviConf.account}`
+        process.title = `KiviBot ${version} ${kiviConf.account}`
 
         console.log(`欢迎使用 KiviBot，轻量、高效、跨平台、能跑就行！`)
 
         console.log('使用文档: ' + colors.green('https://beta.kivibot.com'))
-        console.log('框架版本: ' + colors.green(`@kivibot/core ${pkg.version}`))
+        console.log('框架版本: ' + colors.green(`@kivibot/core ${version}`))
         console.log('配置文件: ' + colors.green(`${ConfigPath}\n`))
 
         const { log_level = 'info', oicq_config = {} } = kiviConf

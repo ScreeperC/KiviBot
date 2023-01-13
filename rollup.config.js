@@ -9,8 +9,8 @@ import json from '@rollup/plugin-json'
 export default {
     input: "src/index.ts",
     output: {
-        file: "dist/index.js",
-        format: "mjs",
+        dir: "dist/",
+        format: "cjs",
         sourcemap: true,
     },
 
